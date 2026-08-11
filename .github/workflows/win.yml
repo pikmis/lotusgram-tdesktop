@@ -61,6 +61,7 @@ jobs:
       UPLOAD_ARTIFACT: "true"
       ONLY_CACHE: "false"
       PREPARE_PATH: "Telegram/build/prepare/prepare.py"
+      NUMBER_OF_PROCESSORS: 4  # <--- ИСПРАВЛЕНИЕ: Жестко задаем количество ядер для make
 
     defaults:
       run:
@@ -148,6 +149,7 @@ jobs:
         env:
           GYP_MSVS_OVERRIDE_PATH: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\'
           GYP_MSVS_VERSION: 2022
+          NUMBER_OF_PROCESSORS: 4  # <--- Дублируем здесь для надежности
         run: |
           %TBUILD%\%REPO_NAME%\Telegram\build\prepare\win.bat skip-release silent ${{ matrix.qt }}
 
