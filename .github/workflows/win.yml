@@ -103,8 +103,33 @@ jobs:
           git config --global user.email "you@example.com"
           git config --global user.name "Sample"
 
-          # ИСПРАВЛЕНИЕ: Патчим prepare.py, чтобы она удалила флаг -m из msbuild при сборке libvpx
-          sed -i 's/for \/r %%i in (..\\patches\\libvpx\\\*) do git apply %%i/for \/r %%i in (..\\patches\\libvpx\\\*) do git apply %%i\n    sed -i "s\/-m -t:Build\/-t:Build\/g" build\/make\/gen_msvs_sln.sh/' "$TBUILD/$REPO_NAME/Telegram/build/prepare/prepare.py"
+      - name: Patch prepare.py to fix libvpx msbuild error
+        shell: python
+        run: |
+          import os
+          prepare_path = os.path.join(os.environ['TBUILD'], os.environ['REPO_NAME'], 'Telegram', 'build', 'prepare', 'prepare.py')
+          with open(prepare_path, 'r', encoding='utf-8') as f:
+              lines = f.readlines()
+          
+          old_str = "bash --login ../patches/build_libvpx_win.sh"
+          patch_cmd = "%THIRDPARTY_DIR%\\msys64\\usr\\bin\\sed.exe -i \"s/-m -t:Build/-t:Build/g\" build/make/gen_msvs_sln.sh"
+          
+          patched = False
+          for i, line in enumerate(lines):
+              if old_str in line:
+                  clean_line = line.rstrip('\r\n')
+                  indent = clean_line[:len(clean_line) - len(clean_line.lstrip())]
+                  ending = '\r\n' if line.endswith('\r\n') else '\n'
+                  lines.insert(i, indent + patch_cmd + ending)
+                  patched = True
+                  break
+                  
+          if patched:
+              with open(prepare_path, 'w', encoding='utf-8', newline='') as f:
+                  f.writelines(lines)
+              print("Successfully patched prepare.py to remove -m flag from msbuild")
+          else:
+              print("Could not find libvpx build script in prepare.py")
 
       - uses: ilammy/msvc-dev-cmd@v1.13.0
         name: Native Tools Command Prompt.
