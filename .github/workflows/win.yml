@@ -45,6 +45,7 @@ jobs:
   windows:
     name: Windows
     runs-on: ${{ matrix.arch == 'arm64' && 'windows-11-arm' || 'windows-2022' }}
+    timeout-minutes: 360
 
     strategy:
       matrix:
