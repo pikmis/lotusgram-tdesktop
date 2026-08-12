@@ -112,7 +112,7 @@ jobs:
               lines = f.readlines()
           
           old_str = "bash --login ../patches/build_libvpx_win.sh"
-          patch_cmd = "%THIRDPARTY_DIR%\\msys64\\usr\\bin\\sed.exe -i \"s/-m -t:Build/-t:Build/g\" build/make/gen_msvs_sln.sh"
+          patch_cmd = r"%THIRDPARTY_DIR%\msys64\usr\bin\sed.exe -i 's/-m -t:Build/-t:Build/g' build/make/gen_msvs_sln.sh"
           
           patched = False
           for i, line in enumerate(lines):
