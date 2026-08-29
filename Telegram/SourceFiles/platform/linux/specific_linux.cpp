@@ -234,7 +234,7 @@ bool GenerateDesktopFile(
 	DEBUG_LOG(("App Info: placing .desktop file to %1").arg(targetPath));
 	if (!QDir(targetPath).exists()) QDir().mkpath(targetPath);
 
-	const auto sourceFile = u":/misc/org.telegram.desktop.desktop"_q;
+	const auto sourceFile = u":/misc/org.lotusgram.desktop.desktop"_q;
 	const auto targetFile = targetPath
 		+ QGuiApplication::desktopFileName()
 		+ u".desktop"_q;
@@ -470,7 +470,7 @@ void InstallLauncher() {
 		"DESKTOPINTEGRATION");
 
 	// don't update desktop file for alpha version or if updater is disabled
-	if (cAlphaVersion() || Core::UpdaterDisabled() || DisabledByEnv) {
+	if (cAlphaVersion() || DisabledByEnv) {
 		return;
 	}
 
@@ -670,16 +670,6 @@ bool SkipTaskbarSupported() {
 }
 
 QString ExecutablePathForShortcuts() {
-	if (Core::UpdaterDisabled()) {
-		const auto &arguments = Core::Launcher::Instance().arguments();
-		if (!arguments.isEmpty()) {
-			const auto result = QFileInfo(arguments.first()).fileName();
-			if (!result.isEmpty()) {
-				return result;
-			}
-		}
-		return cExeName();
-	}
 	return cExeDir() + cExeName();
 }
 
@@ -738,11 +728,11 @@ void start() {
 		}
 
 		if (!Core::UpdaterDisabled()) {
-			return u"org.telegram.desktop._%1"_q.arg(
+			return u"org.lotusgram.desktop._%1"_q.arg(
 				Core::Launcher::Instance().instanceHash().constData());
 		}
 
-		return u"org.telegram.desktop"_q;
+		return u"org.lotusgram.desktop"_q;
 	}());
 
 	LOG(("App ID: %1").arg(QGuiApplication::desktopFileName()));

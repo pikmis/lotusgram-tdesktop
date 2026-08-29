@@ -3,13 +3,15 @@
 set -e
 cd "$(dirname "$0")"
 
+# Compile everything the binary depends on; a real compile error stops the script here
 docker run --rm -t -u $(id -u) \
   -v "$PWD:/usr/src/tdesktop" \
   --memory=12g --memory-swap=20g \
   -w /usr/src/tdesktop/out \
   tdesktop:centos_env \
-  bash -lc 'ninja -f build-Release.ninja -j6 td_mtproto td_ui td_lang lib_base lib_ui || true'
+  bash -lc 'ninja -f build-Release.ninja -j3 $(ninja -f build-Release.ninja -t inputs Release/Lotusgram | grep "\.o$" | tr "\n" " ")'
 
+# Link manually: the LTO link ninja would run does not fit in RAM
 docker run --rm -t -u $(id -u) \
   -v "$PWD:/usr/src/tdesktop" \
   --memory=12g --memory-swap=20g \
@@ -22,6 +24,6 @@ docker run --rm -t -u $(id -u) \
     -Wl,--push-state,--no-as-needed,-ldl,--pop-state -Wl,--as-needed -Wl,-z,muldefs \
     -Wno-odr -Wno-inline -pthread -Wl,--as-needed -Wl,--gc-sections \
     -Wl,--strip-debug \
-    @CMakeFiles/Telegram.Release.rsp -o Release/Telegram'
+    @CMakeFiles/Telegram.Release.rsp -o Release/Lotusgram'
 
-echo "Done: out/Release/Telegram"
+echo "Done: out/Release/Lotusgram"

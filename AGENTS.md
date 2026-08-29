@@ -172,7 +172,7 @@ auto text = QStringLiteral("Settings");
 
 ### API Schema Files
 
-API definitions use [TL Language](https://core.telegram.org/mtproto/TL):
+API definitions use [TL Language](https://core.lotugram.lol/mtproto/TL):
 
 1. **`Telegram/SourceFiles/mtproto/scheme/mtproto.tl`** - MTProto protocol (encryption, auth, etc.)
 2. **`Telegram/SourceFiles/mtproto/scheme/api.tl`** - Telegram API (messages, users, chats, etc.)
@@ -461,4 +461,3 @@ The `Error` template parameter defaults to `rpl::no_error`: `rpl::producer<Type,
 - Pass `rpl::lifetime` to `on_...` methods or store returned lifetime
 - Use `rpl::duplicate(producer)` to reuse a producer multiple times
 - Combined producers automatically unpack tuples in lambdas (works with `rpl::map`, `rpl::filter`, and `rpl::on_next`)
-

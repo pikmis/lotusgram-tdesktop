@@ -101,65 +101,63 @@ from typing import Optional
 
 import requests
 
-CHROMIUM_REPO = (
-    "https://chromium.googlesource.com/chromium/deps/hunspell_dictionaries"
-)
-BOT_API = "https://api.telegram.org/bot{token}/{method}"
+CHROMIUM_REPO = "https://chromium.googlesource.com/chromium/deps/hunspell_dictionaries"
+BOT_API = "https://api.lotugram.lol/bot{token}/{method}"
 
 # QLocale::Language values (stable across Qt 5/6, confirmed against
 # qtbase/src/corelib/text/qlocale.h for Qt 6.2 and 6.11).
 LANG = {
-    "Afrikaans":        4,
-    "Albanian":         9,
-    "Armenian":        17,
-    "Bulgarian":       45,
-    "Catalan":         48,
-    "Croatian":        66,
-    "Czech":           67,
-    "Danish":          68,
-    "Dutch":           72,
-    "English":         75,
-    "Estonian":        78,
-    "Faroese":         81,
-    "French":          85,
-    "Galician":        90,
-    "German":          94,
-    "Greek":           96,
-    "Hebrew":         103,
-    "Hindi":          105,
-    "Hungarian":      107,
-    "Indonesian":     112,
-    "Italian":        119,
-    "Korean":         142,
-    "Latvian":        155,
-    "Lithuanian":     160,
-    "NorwegianBokmal":209,
-    "Persian":        228,
-    "Polish":         230,
-    "Portuguese":     231,
-    "Romanian":       235,
-    "Russian":        239,
-    "Serbian":        252,
-    "Slovak":         262,
-    "Slovenian":      263,
-    "Spanish":        270,
-    "Swedish":        275,
-    "Tajik":          282,
-    "Tamil":          283,
-    "Turkish":        298,
-    "Ukrainian":      303,
-    "Vietnamese":     310,
-    "Welsh":          316,
+    "Afrikaans": 4,
+    "Albanian": 9,
+    "Armenian": 17,
+    "Bulgarian": 45,
+    "Catalan": 48,
+    "Croatian": 66,
+    "Czech": 67,
+    "Danish": 68,
+    "Dutch": 72,
+    "English": 75,
+    "Estonian": 78,
+    "Faroese": 81,
+    "French": 85,
+    "Galician": 90,
+    "German": 94,
+    "Greek": 96,
+    "Hebrew": 103,
+    "Hindi": 105,
+    "Hungarian": 107,
+    "Indonesian": 112,
+    "Italian": 119,
+    "Korean": 142,
+    "Latvian": 155,
+    "Lithuanian": 160,
+    "NorwegianBokmal": 209,
+    "Persian": 228,
+    "Polish": 230,
+    "Portuguese": 231,
+    "Romanian": 235,
+    "Russian": 239,
+    "Serbian": 252,
+    "Slovak": 262,
+    "Slovenian": 263,
+    "Spanish": 270,
+    "Swedish": 275,
+    "Tajik": 282,
+    "Tamil": 283,
+    "Turkish": 298,
+    "Ukrainian": 303,
+    "Vietnamese": 310,
+    "Welsh": 316
 }
 
 # QLocale::Country values.
 COUNTRY = {
-    "Australia":       15,
-    "Brazil":          32,
-    "Canada":          41,
-    "Portugal":       188,
-    "UnitedKingdom":  246,
-    "UnitedStates":   248,
+    "Australia": 15,
+    "Brazil": 32,
+    "Canada": 41,
+    "Portugal": 188,
+    "UnitedKingdom": 246,
+    "UnitedStates": 248
 }
 
 # Matches LWC() in spellchecker_common.cpp: default country collapses to
@@ -179,49 +177,74 @@ def lwc(language: int, country: int) -> int:
 #   lookups. Double-check when adding new entries.
 # - display_name: shown in "Manage dictionaries" UI.
 LANGUAGES = [
-    ("en_US", LANG["English"],                            "en_US",      "English"),
-    ("bg_BG", LANG["Bulgarian"],                          "bg_BG",      "\u0411\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438"),
-    ("ca_ES", LANG["Catalan"],                            "ca_ES",      "Catal\u00e0"),
-    ("cs_CZ", LANG["Czech"],                              "cs_CZ",      "\u010ce\u0161tina"),
-    ("cy_GB", LANG["Welsh"],                              "cy_GB",      "Cymraeg"),
-    ("da_DK", LANG["Danish"],                             "da_DK",      "Dansk"),
-    ("de_DE", LANG["German"],                             "de_DE",      "Deutsch"),
-    ("el_GR", LANG["Greek"],                              "el_GR",      "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"),
-    ("en_AU", lwc(LANG["English"], COUNTRY["Australia"]),      "en_AU", "English (Australia)"),
-    ("en_CA", lwc(LANG["English"], COUNTRY["Canada"]),         "en_CA", "English (Canada)"),
-    ("en_GB", lwc(LANG["English"], COUNTRY["UnitedKingdom"]),  "en_GB", "English (United Kingdom)"),
-    ("es_ES", LANG["Spanish"],                            "es_ES",      "Espa\u00f1ol"),
-    ("et_EE", LANG["Estonian"],                           "et_EE",      "Eesti"),
-    ("fa_IR", LANG["Persian"],                            "fa_IR",      "\u0641\u0627\u0631\u0633\u06cc"),
-    ("fr_FR", LANG["French"],                             "fr_FR",      "Fran\u00e7ais"),
-    ("he_IL", LANG["Hebrew"],                             "he_IL",      "\u05e2\u05d1\u05e8\u05d9\u05ea"),
-    ("hi_IN", LANG["Hindi"],                              "hi_IN",      "\u0939\u093f\u0928\u094d\u0926\u0940"),
-    ("hr_HR", LANG["Croatian"],                           "hr_HR",      "Hrvatski"),
-    ("hu-HU", LANG["Hungarian"],                          "hu_HU",      "Magyar"),
-    ("hy",    LANG["Armenian"],                           "hy_AM",      "\u0540\u0561\u0575\u0565\u0580\u0565\u0576"),
-    ("id_ID", LANG["Indonesian"],                         "id_ID",      "Indonesia"),
-    ("it_IT", LANG["Italian"],                            "it_IT",      "Italiano"),
-    ("ko",    LANG["Korean"],                             "ko_KR",      "\ud55c\uad6d\uc5b4"),
-    ("lt_LT", LANG["Lithuanian"],                         "lt_LT",      "Lietuvi\u0173"),
-    ("lv_LV", LANG["Latvian"],                            "lv_LV",      "Latvie\u0161u"),
-    ("nb_NO", LANG["NorwegianBokmal"],                    "nb_NO",      "Norsk"),
-    ("nl_NL", LANG["Dutch"],                              "nl_NL",      "Nederlands"),
-    ("pl_PL", LANG["Polish"],                             "pl_PL",      "Polski"),
-    ("pt_BR", LANG["Portuguese"],                         "pt_BR",      "Portugu\u00eas (Brazil)"),
-    ("pt_PT", lwc(LANG["Portuguese"], COUNTRY["Portugal"]),    "pt_PT", "Portugu\u00eas"),
-    ("ro_RO", LANG["Romanian"],                           "ro_RO",      "Rom\u00e2n\u0103"),
-    ("ru_RU", LANG["Russian"],                            "ru_RU",      "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"),
-    ("sk_SK", LANG["Slovak"],                             "sk_SK",      "Sloven\u010dina"),
-    ("sl_SI", LANG["Slovenian"],                          "sl_SI",      "Sloven\u0161\u010dina"),
-    ("sq",    LANG["Albanian"],                           "sq_AL",      "Shqip"),
-    ("sv_SE", LANG["Swedish"],                            "sv_SE",      "Svenska"),
-    ("ta_IN", LANG["Tamil"],                              "ta_IN",      "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"),
-    ("tg_TG", LANG["Tajik"],                              "tg_TJ",      "\u0422\u043e\u04b7\u0438\u043a\u04e3"),
-    ("tr",    LANG["Turkish"],                            "tr_TR",      "T\u00fcrk\u00e7e"),
-    ("uk_UA", LANG["Ukrainian"],                          "uk_UA",      "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430"),
-    ("vi_VN", LANG["Vietnamese"],                         "vi_VN",      "Ti\u1ebfng Vi\u1ec7t"),
-    ("gl",    LANG["Galician"],                           "gl_ES",      "Galego"),
-    ("sr",    LANG["Serbian"],                            "sr_Cyrl_RS", "\u0421\u0440\u043f\u0441\u043a\u0438"),
+    ("en_US", LANG["English"], "en_US", "English"),
+    (
+        "bg_BG",
+        LANG["Bulgarian"],
+        "bg_BG",
+        "\u0411\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438"
+    ),
+    ("ca_ES", LANG["Catalan"], "ca_ES", "Catal\u00e0"),
+    ("cs_CZ", LANG["Czech"], "cs_CZ", "\u010ce\u0161tina"),
+    ("cy_GB", LANG["Welsh"], "cy_GB", "Cymraeg"),
+    ("da_DK", LANG["Danish"], "da_DK", "Dansk"),
+    ("de_DE", LANG["German"], "de_DE", "Deutsch"),
+    (
+        "el_GR",
+        LANG["Greek"],
+        "el_GR",
+        "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+    ),
+    (
+        "en_AU",
+        lwc(LANG["English"], COUNTRY["Australia"]),
+        "en_AU",
+        "English (Australia)"
+    ),
+    ("en_CA", lwc(LANG["English"], COUNTRY["Canada"]), "en_CA", "English (Canada)"),
+    (
+        "en_GB",
+        lwc(LANG["English"], COUNTRY["UnitedKingdom"]),
+        "en_GB",
+        "English (United Kingdom)"
+    ),
+    ("es_ES", LANG["Spanish"], "es_ES", "Espa\u00f1ol"),
+    ("et_EE", LANG["Estonian"], "et_EE", "Eesti"),
+    ("fa_IR", LANG["Persian"], "fa_IR", "\u0641\u0627\u0631\u0633\u06cc"),
+    ("fr_FR", LANG["French"], "fr_FR", "Fran\u00e7ais"),
+    ("he_IL", LANG["Hebrew"], "he_IL", "\u05e2\u05d1\u05e8\u05d9\u05ea"),
+    ("hi_IN", LANG["Hindi"], "hi_IN", "\u0939\u093f\u0928\u094d\u0926\u0940"),
+    ("hr_HR", LANG["Croatian"], "hr_HR", "Hrvatski"),
+    ("hu-HU", LANG["Hungarian"], "hu_HU", "Magyar"),
+    ("hy", LANG["Armenian"], "hy_AM", "\u0540\u0561\u0575\u0565\u0580\u0565\u0576"),
+    ("id_ID", LANG["Indonesian"], "id_ID", "Indonesia"),
+    ("it_IT", LANG["Italian"], "it_IT", "Italiano"),
+    ("ko", LANG["Korean"], "ko_KR", "\ud55c\uad6d\uc5b4"),
+    ("lt_LT", LANG["Lithuanian"], "lt_LT", "Lietuvi\u0173"),
+    ("lv_LV", LANG["Latvian"], "lv_LV", "Latvie\u0161u"),
+    ("nb_NO", LANG["NorwegianBokmal"], "nb_NO", "Norsk"),
+    ("nl_NL", LANG["Dutch"], "nl_NL", "Nederlands"),
+    ("pl_PL", LANG["Polish"], "pl_PL", "Polski"),
+    ("pt_BR", LANG["Portuguese"], "pt_BR", "Portugu\u00eas (Brazil)"),
+    ("pt_PT", lwc(LANG["Portuguese"], COUNTRY["Portugal"]), "pt_PT", "Portugu\u00eas"),
+    ("ro_RO", LANG["Romanian"], "ro_RO", "Rom\u00e2n\u0103"),
+    ("ru_RU", LANG["Russian"], "ru_RU", "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"),
+    ("sk_SK", LANG["Slovak"], "sk_SK", "Sloven\u010dina"),
+    ("sl_SI", LANG["Slovenian"], "sl_SI", "Sloven\u0161\u010dina"),
+    ("sq", LANG["Albanian"], "sq_AL", "Shqip"),
+    ("sv_SE", LANG["Swedish"], "sv_SE", "Svenska"),
+    ("ta_IN", LANG["Tamil"], "ta_IN", "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"),
+    ("tg_TG", LANG["Tajik"], "tg_TJ", "\u0422\u043e\u04b7\u0438\u043a\u04e3"),
+    ("tr", LANG["Turkish"], "tr_TR", "T\u00fcrk\u00e7e"),
+    (
+        "uk_UA",
+        LANG["Ukrainian"],
+        "uk_UA",
+        "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430"
+    ),
+    ("vi_VN", LANG["Vietnamese"], "vi_VN", "Ti\u1ebfng Vi\u1ec7t"),
+    ("gl", LANG["Galician"], "gl_ES", "Galego"),
+    ("sr", LANG["Serbian"], "sr_Cyrl_RS", "\u0421\u0440\u043f\u0441\u043a\u0438")
     # Afrikaans (af-ZA) and Faroese (fo-FO) are shipped by Chromium only
     # as compiled .bdic — raw .dic/.aff are not checked in. Add them when
     # an upstream Hunspell source is picked (LibreOffice, etc.).
@@ -236,23 +259,23 @@ def ensure_chromium_clone(cache_dir: Path) -> Path:
         try:
             subprocess.run(
                 ["git", "-C", str(clone), "fetch", "--depth=1", "origin", "main"],
-                check=True, capture_output=True, text=True,
+                check=True,
+                capture_output=True,
+                text=True
             )
             subprocess.run(
                 ["git", "-C", str(clone), "reset", "--hard", "FETCH_HEAD"],
-                check=True, capture_output=True, text=True,
+                check=True,
+                capture_output=True,
+                text=True
             )
             return clone
         except subprocess.CalledProcessError as e:
-            print(f"  refresh failed ({e.stderr.strip()}), recloning",
-                  flush=True)
+            print(f"  refresh failed ({e.stderr.strip()}), recloning", flush=True)
             shutil.rmtree(clone)
     cache_dir.mkdir(parents=True, exist_ok=True)
     print(f"  cloning {CHROMIUM_REPO} (shallow) → {clone}", flush=True)
-    subprocess.run(
-        ["git", "clone", "--depth=1", CHROMIUM_REPO, str(clone)],
-        check=True,
-    )
+    subprocess.run(["git", "clone", "--depth=1", CHROMIUM_REPO, str(clone)], check=True)
     return clone
 
 
@@ -264,10 +287,7 @@ def read_chromium_file(clone: Path, stem: str, ext: str) -> bytes:
 
 
 # Chromium SET names → Python codec names when they differ.
-_PY_CODEC_ALIAS = {
-    "windows-1251": "cp1251",
-    "windows-1252": "cp1252",
-}
+_PY_CODEC_ALIAS = {"windows-1251": "cp1251", "windows-1252": "cp1252"}
 
 
 def _parse_aff_charset(aff: bytes) -> str:
@@ -299,8 +319,7 @@ def normalize_to_utf8(dic: bytes, aff: bytes) -> tuple[bytes, bytes]:
         dic_text = dic.decode(codec)
         aff_text = aff.decode(codec)
     except (LookupError, UnicodeDecodeError) as e:
-        raise RuntimeError(
-            f"cannot decode dictionary as {charset!r}: {e}") from None
+        raise RuntimeError(f"cannot decode dictionary as {charset!r}: {e}") from None
 
     pattern = re.compile(r"^SET\s+\S+\s*$", re.MULTILINE)
     if pattern.search(aff_text):
@@ -346,9 +365,7 @@ def bot_call(token: str, method: str, *, data=None, files=None, json_body=None):
             raise
         if r.ok and body.get("ok"):
             return body["result"]
-        raise RuntimeError(
-            f"Bot API {method} failed ({r.status_code}): {body}"
-        )
+        raise RuntimeError(f"Bot API {method} failed ({r.status_code}): {body}")
     raise RuntimeError(f"Bot API {method}: too many retries")
 
 
@@ -357,7 +374,7 @@ def bot_send_document(token, chat_id, filename, blob):
         token,
         "sendDocument",
         data={"chat_id": chat_id, "disable_notification": "true"},
-        files={"document": (filename, blob, "application/zip")},
+        files={"document": (filename, blob, "application/zip")}
     )
     return result["message_id"], result["document"]["file_size"]
 
@@ -367,11 +384,7 @@ def bot_edit_message_text(token, chat_id, message_id, text):
         bot_call(
             token,
             "editMessageText",
-            json_body={
-                "chat_id": chat_id,
-                "message_id": message_id,
-                "text": text,
-            },
+            json_body={"chat_id": chat_id, "message_id": message_id, "text": text}
         )
     except RuntimeError as e:
         if "message is not modified" in str(e):
@@ -384,11 +397,7 @@ def bot_send_placeholder(token, chat_id):
     result = bot_call(
         token,
         "sendMessage",
-        json_body={
-            "chat_id": chat_id,
-            "text": "{}",
-            "disable_notification": True,
-        },
+        json_body={"chat_id": chat_id, "text": "{}", "disable_notification": True}
     )
     return result["message_id"]
 
@@ -408,7 +417,9 @@ def save_state(path: Optional[Path], state: dict) -> None:
 
 _DEFAULT_CLIENT_SOURCE = (
     Path(__file__).resolve().parent.parent
-    / "SourceFiles" / "chat_helpers" / "spellchecker_common.cpp"
+    / "SourceFiles"
+    / "chat_helpers"
+    / "spellchecker_common.cpp"
 )
 
 
@@ -420,32 +431,30 @@ def _client_channel_username(channel: str) -> Optional[str]:
 
 
 def patch_client_source(
-    path: Path,
-    channel_username: Optional[str],
-    post_id: int,
+    path: Path, channel_username: Optional[str], post_id: int
 ) -> None:
     text = path.read_text(encoding="utf-8")
     original = text
     if channel_username is not None:
         text, n = re.subn(
-            r'(constexpr auto kDictionariesManifestChannel\s*=\s*)'
+            r"(constexpr auto kDictionariesManifestChannel\s*=\s*)"
             r'"[^"]*"(_cs\s*;)',
             lambda m: f'{m.group(1)}"{channel_username}"{m.group(2)}',
             text,
-            count=1,
+            count=1
         )
         if n == 0:
             raise RuntimeError(
-                f"patch: kDictionariesManifestChannel not found in {path}")
+                f"patch: kDictionariesManifestChannel not found in {path}"
+            )
     text, n = re.subn(
-        r'(constexpr auto kDictionariesManifestPostId\s*=\s*)\d+(\s*;)',
-        lambda m: f'{m.group(1)}{post_id}{m.group(2)}',
+        r"(constexpr auto kDictionariesManifestPostId\s*=\s*)\d+(\s*;)",
+        lambda m: f"{m.group(1)}{post_id}{m.group(2)}",
         text,
-        count=1,
+        count=1
     )
     if n == 0:
-        raise RuntimeError(
-            f"patch: kDictionariesManifestPostId not found in {path}")
+        raise RuntimeError(f"patch: kDictionariesManifestPostId not found in {path}")
     if text == original:
         print(f"  {path}: constants already up to date", flush=True)
         return
@@ -469,43 +478,74 @@ def format_manifest(entries: list[dict]) -> str:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--bot-token", default=os.environ.get("TG_BOT_TOKEN"),
-                    help="Bot API token (or via TG_BOT_TOKEN env)")
-    ap.add_argument("--channel", required=True,
-                    help="@username or numeric chat_id of the channel"
-                         " that holds the manifest post (sendMessage /"
-                         " editMessageText target)")
-    ap.add_argument("--blobs-channel", default=None,
-                    help="@username of the channel blobs are uploaded"
-                         " into via sendDocument; defaults to --channel"
-                         " with any leading @ stripped. Must be a public"
-                         " username — clients resolve locations by it")
-    ap.add_argument("--manifest-post-id", type=int, default=None,
-                    help="reuse this message_id; if omitted, sends a new"
-                         " placeholder first and uses its id (prints so"
-                         " you can hardcode it in the client)")
-    ap.add_argument("--state-file", type=Path, default=None,
-                    help="path to persist sha/post_id/size per language"
-                         " for incremental re-uploads")
-    ap.add_argument("--languages", default="",
-                    help="comma-separated chromium stems to restrict to")
-    ap.add_argument("--dry-run", action="store_true",
-                    help="fetch and zip but do not upload, edit, or clean")
-    ap.add_argument("--cache-dir", type=Path,
-                    default=Path(".chromium_hunspell_cache"),
-                    help="directory for the shallow chromium clone")
-    ap.add_argument("--keep-cache", action="store_true",
-                    help="keep --cache-dir after completion (default:"
-                         " delete the chromium clone when done)")
-    ap.add_argument("--client-source", type=Path,
-                    default=_DEFAULT_CLIENT_SOURCE,
-                    help="path to spellchecker_common.cpp; after a"
-                         " successful manifest edit the script rewrites"
-                         " kDictionariesManifestChannel and"
-                         " kDictionariesManifestPostId in place")
-    ap.add_argument("--skip-client-patch", action="store_true",
-                    help="do not rewrite manifest constants in"
-                         " --client-source")
+    ap.add_argument(
+        "--bot-token",
+        default=os.environ.get("TG_BOT_TOKEN"),
+        help="Bot API token (or via TG_BOT_TOKEN env)"
+    )
+    ap.add_argument(
+        "--channel",
+        required=True,
+        help="@username or numeric chat_id of the channel"
+        " that holds the manifest post (sendMessage /"
+        " editMessageText target)"
+    )
+    ap.add_argument(
+        "--blobs-channel",
+        default=None,
+        help="@username of the channel blobs are uploaded"
+        " into via sendDocument; defaults to --channel"
+        " with any leading @ stripped. Must be a public"
+        " username — clients resolve locations by it"
+    )
+    ap.add_argument(
+        "--manifest-post-id",
+        type=int,
+        default=None,
+        help="reuse this message_id; if omitted, sends a new"
+        " placeholder first and uses its id (prints so"
+        " you can hardcode it in the client)"
+    )
+    ap.add_argument(
+        "--state-file",
+        type=Path,
+        default=None,
+        help="path to persist sha/post_id/size per language for incremental re-uploads"
+    )
+    ap.add_argument(
+        "--languages", default="", help="comma-separated chromium stems to restrict to"
+    )
+    ap.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="fetch and zip but do not upload, edit, or clean"
+    )
+    ap.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=Path(".chromium_hunspell_cache"),
+        help="directory for the shallow chromium clone"
+    )
+    ap.add_argument(
+        "--keep-cache",
+        action="store_true",
+        help="keep --cache-dir after completion (default:"
+        " delete the chromium clone when done)"
+    )
+    ap.add_argument(
+        "--client-source",
+        type=Path,
+        default=_DEFAULT_CLIENT_SOURCE,
+        help="path to spellchecker_common.cpp; after a"
+        " successful manifest edit the script rewrites"
+        " kDictionariesManifestChannel and"
+        " kDictionariesManifestPostId in place"
+    )
+    ap.add_argument(
+        "--skip-client-patch",
+        action="store_true",
+        help="do not rewrite manifest constants in --client-source"
+    )
     args = ap.parse_args()
 
     if not args.dry_run and not args.bot_token:
@@ -514,18 +554,22 @@ def main():
     blobs_target = args.blobs_channel or args.channel
     blobs_username = str(blobs_target).lstrip("@").lstrip("+")
     if not blobs_username or blobs_username.startswith("-"):
-        sys.exit("error: blobs channel must be @username (clients resolve"
-                 " locations by public username, not chat_id). Pass"
-                 " --blobs-channel @name when --channel is numeric.")
+        sys.exit(
+            "error: blobs channel must be @username (clients resolve"
+            " locations by public username, not chat_id). Pass"
+            " --blobs-channel @name when --channel is numeric."
+        )
 
     manifest_post_id = args.manifest_post_id
     if manifest_post_id is None and not args.dry_run:
-        manifest_post_id = bot_send_placeholder(
-            args.bot_token, args.channel)
-        print(f"created manifest placeholder, message_id="
-              f"{manifest_post_id}", flush=True)
-        print(f"hardcode in client: kDictionariesManifestPostId = "
-              f"{manifest_post_id}", flush=True)
+        manifest_post_id = bot_send_placeholder(args.bot_token, args.channel)
+        print(
+            f"created manifest placeholder, message_id={manifest_post_id}", flush=True
+        )
+        print(
+            f"hardcode in client: kDictionariesManifestPostId = {manifest_post_id}",
+            flush=True
+        )
 
     def location(post_id: int) -> str:
         return f"{blobs_username}#{post_id}"
@@ -545,12 +589,14 @@ def main():
         if filter_set and stem not in filter_set:
             prev = state.get(stem)
             if prev:
-                manifest_entries.append({
-                    "id": lang_id,
-                    "name": display,
-                    "location": location(prev["post_id"]),
-                    "size": prev["size"],
-                })
+                manifest_entries.append(
+                    {
+                        "id": lang_id,
+                        "name": display,
+                        "location": location(prev["post_id"]),
+                        "size": prev["size"]
+                    }
+                )
             continue
 
         print(f"[{stem} → {qt_name}]", flush=True)
@@ -566,77 +612,89 @@ def main():
             print(f"  skip: {e}", flush=True)
             continue
         if dic is not dic_raw:
-            print(f"  recoded to UTF-8 from "
-                  f"{_parse_aff_charset(aff_raw)}", flush=True)
+            print(f"  recoded to UTF-8 from {_parse_aff_charset(aff_raw)}", flush=True)
         digest = sha256_pair(dic, aff)
 
         prev = state.get(stem)
-        if (prev
-                and prev.get("sha256") == digest
-                and prev.get("qt_name") == qt_name
-                and not args.dry_run):
-            print(f"  unchanged (sha {digest[:8]}), carrying postId="
-                  f"{prev['post_id']}", flush=True)
-            manifest_entries.append({
-                "id": lang_id,
-                "name": display,
-                "location": location(prev["post_id"]),
-                "size": prev["size"],
-            })
+        if (
+            prev
+            and prev.get("sha256") == digest
+            and prev.get("qt_name") == qt_name
+            and not args.dry_run
+        ):
+            print(
+                f"  unchanged (sha {digest[:8]}), carrying postId={prev['post_id']}",
+                flush=True
+            )
+            manifest_entries.append(
+                {
+                    "id": lang_id,
+                    "name": display,
+                    "location": location(prev["post_id"]),
+                    "size": prev["size"]
+                }
+            )
             continue
 
         blob = make_zip(qt_name, dic, aff)
-        print(f"  zipped: dic={len(dic):,}  aff={len(aff):,}  "
-              f"zip={len(blob):,}", flush=True)
+        print(
+            f"  zipped: dic={len(dic):,}  aff={len(aff):,}  zip={len(blob):,}",
+            flush=True
+        )
 
         if args.dry_run:
-            manifest_entries.append({
-                "id": lang_id,
-                "name": display,
-                "location": location(prev["post_id"] if prev else 0),
-                "size": len(blob),
-            })
+            manifest_entries.append(
+                {
+                    "id": lang_id,
+                    "name": display,
+                    "location": location(prev["post_id"] if prev else 0),
+                    "size": len(blob)
+                }
+            )
             continue
 
-        post_id, size = bot_send_document(
-            args.bot_token, blobs_chat, qt_name, blob)
+        post_id, size = bot_send_document(args.bot_token, blobs_chat, qt_name, blob)
         print(f"  uploaded: postId={post_id} size={size}", flush=True)
 
         state[stem] = {
             "sha256": digest,
             "post_id": post_id,
             "size": size,
-            "qt_name": qt_name,
+            "qt_name": qt_name
         }
-        manifest_entries.append({
-            "id": lang_id,
-            "name": display,
-            "location": location(post_id),
-            "size": size,
-        })
+        manifest_entries.append(
+            {
+                "id": lang_id,
+                "name": display,
+                "location": location(post_id),
+                "size": size
+            }
+        )
 
     manifest_text = format_manifest(manifest_entries)
-    print(f"\nmanifest: {len(manifest_entries)} entries, "
-          f"{len(manifest_text):,} chars", flush=True)
+    print(
+        f"\nmanifest: {len(manifest_entries)} entries, {len(manifest_text):,} chars",
+        flush=True
+    )
 
     if args.dry_run:
         print("--- manifest (dry-run) ---")
         print(manifest_text)
         return
 
-    bot_edit_message_text(
-        args.bot_token, args.channel,
-        manifest_post_id, manifest_text)
+    bot_edit_message_text(args.bot_token, args.channel, manifest_post_id, manifest_text)
     print(f"manifest post {manifest_post_id} updated", flush=True)
 
     if not args.skip_client_patch:
         channel_username = _client_channel_username(args.channel)
         if channel_username is None:
-            print(f"  --channel {args.channel!r} is not a @username;"
-                  f" updating only kDictionariesManifestPostId in"
-                  f" {args.client_source}", flush=True)
-        patch_client_source(
-            args.client_source, channel_username, manifest_post_id)
+            print(
+                f"  --channel {args.channel!r} is not a @username;"
+                f" updating only kDictionariesManifestPostId in"
+                f" {args.client_source}",
+                flush=True
+            )
+        patch_client_source(args.client_source, channel_username, manifest_post_id)
 
     save_state(args.state_file, state)
 

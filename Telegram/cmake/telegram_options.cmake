@@ -22,7 +22,7 @@ if (TDESKTOP_API_ID STREQUAL "0" OR TDESKTOP_API_HASH STREQUAL "")
     " > your own 'api_id' and 'api_hash' for the Telegram API access.\n"
     " >\n"
     " > How to obtain your 'api_id' and 'api_hash' is described here:\n"
-    " > https://core.telegram.org/api/obtaining_api_id\n"
+    " > https://core.lotugram.lol/api/obtaining_api_id\n"
     " >\n"
     " > If you're building the application not for deployment,\n"
     " > but only for test purposes you can use TEST ONLY credentials,\n"

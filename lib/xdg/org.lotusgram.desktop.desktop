@@ -1,11 +1,11 @@
 [Desktop Entry]
-Name=Telegram
-Comment=New era of messaging
+Name=Lotusgram
+Comment=Независимая платформа для общения
 TryExec=Telegram
 Exec=Telegram -- %U
-Icon=org.telegram.desktop
+Icon=org.lotusgram.desktop
 Terminal=false
-StartupWMClass=TelegramDesktop
+StartupWMClass=LotusgramDesktop
 Type=Application
 Categories=Chat;Network;InstantMessaging;Qt;
 MimeType=x-scheme-handler/tg;x-scheme-handler/tonsite;
@@ -18,5 +18,5 @@ X-GNOME-SingleWindow=true
 
 [Desktop Action quit]
 Exec=Telegram -quit
-Name=Quit Telegram
+Name=Quit Lotusgram
 Icon=application-exit

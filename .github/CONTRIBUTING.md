@@ -108,11 +108,11 @@ Before you submit a pull request, please test your changes. Verify that Telegram
   For example: `Fix #545`
 
 [//]: # (LINKS)
-[telegram]: https://telegram.org/
+[telegram]: https://lotugram.lol/
 [help_fork_repo]: https://help.github.com/articles/fork-a-repo/
 [help_change_commit_message]: https://help.github.com/articles/changing-a-commit-message/
 [commit_message]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 [pr]: https://github.com/telegramdesktop/tdesktop/compare
 [build_instructions]: https://github.com/telegramdesktop/tdesktop/blob/master/README.md#build-instructions
 [closing-issues-via-commit-messages]: https://help.github.com/articles/closing-issues-via-commit-messages/
-[translate]: https://translations.telegram.org
+[translate]: https://translations.lotugram.lol

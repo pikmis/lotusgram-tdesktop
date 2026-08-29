@@ -15,10 +15,10 @@ The source code is published under GPLv3 with OpenSSL exception, the license is 
 
 The latest version is available for
 
-* [Windows 7 and above (64 bit)](https://telegram.org/dl/desktop/win64) ([portable](https://telegram.org/dl/desktop/win64_portable))
-* [Windows 7 and above (32 bit)](https://telegram.org/dl/desktop/win) ([portable](https://telegram.org/dl/desktop/win_portable))
-* [macOS 10.13 and above](https://telegram.org/dl/desktop/mac)
-* [Linux static build for 64 bit](https://telegram.org/dl/desktop/linux)
+* [Windows 7 and above (64 bit)](https://lotugram.lol/dl/desktop/win64) ([portable](https://lotugram.lol/dl/desktop/win64_portable))
+* [Windows 7 and above (32 bit)](https://lotugram.lol/dl/desktop/win) ([portable](https://lotugram.lol/dl/desktop/win_portable))
+* [macOS 10.13 and above](https://lotugram.lol/dl/desktop/mac)
+* [Linux static build for 64 bit](https://lotugram.lol/dl/desktop/linux)
 * [Snap](https://snapcraft.io/telegram-desktop)
 * [Flatpak](https://flathub.org/apps/details/org.telegram.desktop)
 
@@ -73,10 +73,10 @@ Version **1.8.15** was the last that supports older systems
 * [GNU/Linux using Docker][linux]
 
 [//]: # (LINKS)
-[telegram]: https://telegram.org
-[telegram_desktop]: https://desktop.telegram.org
-[telegram_api]: https://core.telegram.org
-[telegram_proto]: https://core.telegram.org/mtproto
+[telegram]: https://lotugram.lol
+[telegram_desktop]: https://desktop.lotugram.lol
+[telegram_api]: https://core.lotugram.lol
+[telegram_proto]: https://core.lotugram.lol/mtproto
 [license]: LICENSE
 [win]: docs/building-win.md
 [mac]: docs/building-mac.md
