@@ -47,10 +47,10 @@ The latest version is available for
 * [GNU/Linux using Docker][linux]
 
 [//]: # (LINKS)
-[telegram]: https://lotugram.lol
-[telegram_desktop]: https://desktop.lotugram.lol
-[telegram_api]: https://core.lotugram.lol
-[telegram_proto]: https://core.lotugram.lol/mtproto
+[lotusgram]: https://lotugram.lol
+[lotusgram_desktop]: https://desktop.lotugram.lol
+[lotusgram_api]: https://core.lotugram.lol
+[lotusgram_proto]: https://core.lotugram.lol/mtproto
 [license]: LICENSE
 [win]: docs/building-win.md
 [mac]: docs/building-mac.md
