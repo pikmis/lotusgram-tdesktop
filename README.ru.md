@@ -1,22 +1,20 @@
-# [Lotusgram Desktop][lotusgram_desktop] – Official Messenger
+# [Lotusgram Desktop][lotusgram_desktop] – Официальный месенжер
 
-[на русском](README.ru.md)
+[Лотусграм][lotusgram] десктоп клиент (основан на [Lotusgram API][lotusgram_api] и [MTProto][lotusgram_proto]).
 
-This is the complete source code and the build instructions for the official [Lotusgram][lotusgram] messenger desktop client, based on the [Lotusgram API][lotusgram_api] and the [MTProto][lotusgram_proto] secure protocol.
+[![Превью Лотусграм][preview_image]][preview_image_url]
 
-[![Preview of Lotusgram Desktop][preview_image]][preview_image_url]
+Код опубликован под лицензий [GPLv3][license].
 
-The source code is published under GPLv3, the license is available [here][license].
+## Поддерживаемые ОС
 
-## Supported systems
+Последние версии клиента досутпны для
 
-The latest version is available for
+* [Windows 7 и выше (х64)](https://lotugram.lol/dl/desktop/win64)
+* [macOS 10.13 и выше](https://lotugram.lol/dl/desktop/mac)
+* [Linux х64](https://lotugram.lol/dl/desktop/linux)
 
-* [Windows 7 and above (64 bit)](https://lotugram.lol/dl/desktop/win64) ([portable](https://lotugram.lol/dl/desktop/win64_portable))
-* [macOS 10.13 and above](https://lotugram.lol/dl/desktop/mac)
-* [Linux static build for 64 bit](https://lotugram.lol/dl/desktop/linux)
-
-## Third-party
+## Зерд парти
 
 * Qt 6 ([LGPL](http://doc.qt.io/qt-6/lgpl.html)) and Qt 5.15 ([LGPL](http://doc.qt.io/qt-5/lgpl.html)) slightly patched
 * OpenSSL 3.2.1 ([Apache License 2.0](https://www.openssl.org/source/apache-license-2.0.txt))
@@ -42,7 +40,7 @@ The latest version is available for
 * Hunspell ([LGPL](https://github.com/hunspell/hunspell/blob/master/COPYING.LESSER))
 * Ada ([Apache License 2.0](https://github.com/ada-url/ada/blob/main/LICENSE-APACHE))
 
-## Build instructions
+## Инустркции билда
 
 * [Windows (32-bit and 64-bit)][win]
 * [macOS][mac]
