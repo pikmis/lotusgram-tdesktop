@@ -329,16 +329,6 @@ MainMenu::MainMenu(QWidget *parent, not_null<SessionController *> controller)
           },
           shadow->lifetime());
 
-  _nightThemeSwitch.setCallback([this] {
-    Expects(_nightThemeToggle != nullptr);
-
-    const auto nightMode = Window::Theme::IsNightMode();
-    if (_nightThemeToggle->toggled() != nightMode) {
-      Window::Theme::ToggleNightMode();
-      Window::Theme::KeepApplied();
-    }
-  });
-
   _footer->heightValue() |
       rpl::on_next(
           [=] {
@@ -358,7 +348,7 @@ MainMenu::MainMenu(QWidget *parent, not_null<SessionController *> controller)
   parentResized();
 
   _telegram->setMarkedText(
-      tr::link(u"Lotusgram"_q, u"https://desktop.lotugram.lol"_q));
+      tr::link(u"Lotusgram"_q, u"https://lotusgram.lol/"_q));
   _telegram->setLinksTrusted();
   _version->setMarkedText(
       tr::link(tr::lng_settings_current_version(tr::now, lt_version,
@@ -412,14 +402,6 @@ MainMenu::MainMenu(QWidget *parent, not_null<SessionController *> controller)
       snowRaw->setAttribute(Qt::WA_TransparentForMouseEvents);
       snowLifetime->add([=] { base::unique_qptr{snowRaw}; });
     };
-    Window::Theme::IsNightModeValue() | rpl::on_next(
-                                            [=](bool isNightMode) {
-                                              snowLifetime->destroy();
-                                              if (isNightMode) {
-                                                rebuild();
-                                              }
-                                            },
-                                            lifetime());
   }
 
   setupSwipe();
@@ -595,8 +577,6 @@ void MainMenu::showFinished() {
   _controller->checkHighlightControl(u"main-menu/emoji-status"_q,
                                      _setEmojiStatus,
                                      Settings::SubsectionTitleHighlight());
-  _controller->checkHighlightControl(u"main-menu/night-mode"_q,
-                                     _nightThemeToggle);
 }
 
 void MainMenu::setupMenu() {
@@ -667,46 +647,6 @@ void MainMenu::setupMenu() {
   }
   addAction(tr::lng_menu_settings(), {&st::menuIconSettings})
       ->setClickedCallback([=] { controller->showSettings(); });
-
-  _nightThemeToggle =
-      addAction(tr::lng_menu_night_mode(), {&st::menuIconNightMode})
-          ->toggleOn(_nightThemeSwitches.events_starting_with(
-              Window::Theme::IsNightMode()));
-  _nightThemeToggle->toggledChanges() | rpl::filter([=](bool night) {
-    return (night != Window::Theme::IsNightMode());
-  }) |
-      rpl::on_next(
-          [=](bool night) {
-            if (Window::Theme::Background()->editingTheme()) {
-              _nightThemeSwitches.fire(!night);
-              controller->show(
-                  Ui::MakeInformBox(tr::lng_theme_editor_cant_change_theme()));
-              return;
-            }
-            const auto weak = base::make_weak(this);
-            const auto toggle = [=] {
-              if (!weak) {
-                Window::Theme::ToggleNightMode();
-                Window::Theme::KeepApplied();
-              } else {
-                _nightThemeSwitch.callOnce(st::mainMenu.itemToggle.duration);
-              }
-            };
-            Window::Theme::ToggleNightModeWithConfirmation(
-                &_controller->window(), toggle);
-          },
-          _nightThemeToggle->lifetime());
-
-  Core::App().settings().systemDarkModeValue() |
-      rpl::on_next(
-          [=](std::optional<bool> darkMode) {
-            const auto darkModeEnabled =
-                Core::App().settings().systemDarkModeEnabled();
-            if (darkModeEnabled && darkMode.has_value()) {
-              _nightThemeSwitches.fire_copy(*darkMode);
-            }
-          },
-          _nightThemeToggle->lifetime());
 }
 
 void MainMenu::resizeEvent(QResizeEvent *e) {

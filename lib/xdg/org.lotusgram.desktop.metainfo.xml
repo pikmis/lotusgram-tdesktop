@@ -36,12 +36,12 @@
         <category>InstantMessaging</category>
     </categories>
     <developer id="org.telegram"><name>Telegram FZ-LLC</name></developer>
-    <url type="homepage">https://desktop.lotugram.lol/</url>
-    <url type="faq">https://lotugram.lol/faq</url>
+    <url type="homepage">https://lotusgram.lol/</url>
+    <url type="faq">https://lotusgram.lol/faq</url>
     <url
         type="bugtracker"
     >https://github.com/telegramdesktop/tdesktop/issues</url>
-    <url type="translate">https://translations.lotugram.lol/</url>
+    <url type="translate">https://translations.lotusgram.lol/</url>
     <url type="vcs-browser">https://github.com/telegramdesktop/tdesktop</url>
     <url
         type="contribute"

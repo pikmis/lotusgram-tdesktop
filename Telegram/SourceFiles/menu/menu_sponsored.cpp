@@ -50,7 +50,7 @@ void AboutBox(not_null<Ui::GenericBox *> box,
               std::shared_ptr<ChatHelpers::Show> show, SponsoredPhrases phrases,
               const Data::SponsoredMessages::Details &details,
               Data::SponsoredReportAction report) {
-  constexpr auto kUrl = "https://promote.lotugram.lol"_cs;
+  constexpr auto kUrl = "https://promote.lotusgram.lol"_cs;
 
   box->setWidth(st::boxWideWidth);
   box->setNoContentMargin(true);
@@ -263,7 +263,7 @@ void ShowReportSponsoredBox(std::shared_ptr<ChatHelpers::Show> show,
                             Data::SponsoredReportAction report) {
   const auto guideLink =
       tr::link(tr::lng_report_sponsored_reported_link(tr::now),
-               u"https://promote.lotugram.lol/guidelines"_q);
+               u"https://promote.lotusgram.lol/guidelines"_q);
 
   auto performRequest = [=](const auto &repeatRequest,
                             Data::SponsoredReportResult::Id id) -> void {

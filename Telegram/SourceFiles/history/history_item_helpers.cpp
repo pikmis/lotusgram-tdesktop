@@ -1128,7 +1128,7 @@ void CheckPollVoteNotificationSchedule(
 }
 
 [[nodiscard]] TextWithEntities UnsupportedMessageText() {
-  const auto siteLink = u"https://desktop.lotugram.lol"_q;
+  const auto siteLink = u"https://lotusgram.lol/"_q;
   auto result =
       TextWithEntities{tr::lng_message_unsupported(tr::now, lt_link, siteLink)};
   TextUtilities::ParseEntities(result, Ui::ItemTextNoMonoOptions().flags);
@@ -1143,8 +1143,7 @@ HistoryMessageMarkupData UnsupportedMessageMarkup() {
   markup.flags = ReplyMarkupFlag::Inline;
   auto row = std::vector<Button>();
   row.emplace_back(Button::Type::Url, tr::lng_update_telegram(tr::now),
-                   Button::Visual(),
-                   QByteArray("https://desktop.lotugram.lol"));
+                   Button::Visual(), QByteArray("https://lotusgram.lol/"));
   markup.rows.push_back(std::move(row));
   return markup;
 }

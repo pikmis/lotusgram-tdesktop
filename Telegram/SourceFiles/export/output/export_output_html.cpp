@@ -158,7 +158,7 @@ QByteArray SerializeList(const std::vector<QByteArray> &values) {
 }
 
 QByteArray MakeLinks(const QByteArray &value) {
-  const auto domain = QByteArray("https://lotugram.lol/");
+  const auto domain = QByteArray("https://lotusgram.lol/");
   auto result = QByteArray();
   auto offset = 0;
   while (true) {

@@ -36,19 +36,19 @@ namespace {
 rpl::producer<TextWithEntities> Text1() {
   return tr::lng_about_text1(
       lt_api_link,
-      tr::lng_about_text1_api(tr::url(u"https://core.lotugram.lol/api"_q)),
+      tr::lng_about_text1_api(tr::url(u"https://core.lotusgram.lol/api"_q)),
       tr::marked);
 }
 
 rpl::producer<TextWithEntities> Text2() {
   return tr::lng_about_text2(
       lt_gpl_link,
-      rpl::single(tr::link(
-          "GNU GPL",
-          "https://github.com/telegramdesktop/tdesktop/blob/master/LICENSE")),
+      rpl::single(tr::link("GNU GPL",
+                           "https://github.com/lotusgram/"
+                           "lotusgram-tdesktop/blob/master/LICENSE")),
       lt_github_link,
-      rpl::single(
-          tr::link("GitHub", "https://github.com/telegramdesktop/tdesktop")),
+      rpl::single(tr::link("GitHub",
+                           "https://github.com/lotusgram/lotusgram-tdesktop")),
       tr::marked);
 }
 
@@ -73,7 +73,7 @@ void AboutBox(not_null<Ui::GenericBox *> box) {
                st::boxRowPadding.right(), st::boxRowPadding.bottom()));
   version->setClickedCallback([=] {
     if (cRealAlphaVersion()) {
-      auto url = u"https://tdesktop.com/"_q;
+      auto url = u"https://lotusgram.lol/"_q;
       if (Platform::IsWindows32Bit()) {
         url += u"win/%1.zip"_q;
       } else if (Platform::IsWindows64Bit()) {
@@ -122,7 +122,7 @@ void AboutBox(not_null<Ui::GenericBox *> box) {
 }
 
 QString telegramFaqLink() {
-  const auto result = u"https://lotugram.lol/faq"_q;
+  const auto result = u"https://lotusgram.lol/faq"_q;
   const auto langpacked = [&](const char *language) {
     return result + '/' + language;
   };
@@ -140,6 +140,7 @@ QString telegramFaqLink() {
 
 QString currentVersionText() {
   auto result = QString::fromLatin1(AppVersionStr);
+  result += " сикс севен";
   if (cAlphaVersion()) {
     result += u" alpha %1"_q.arg(cAlphaVersion() % 1000);
   } else if (AppBetaVersion) {

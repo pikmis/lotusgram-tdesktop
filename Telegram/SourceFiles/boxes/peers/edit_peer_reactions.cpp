@@ -842,7 +842,7 @@ void EditAllowedReactionsBox(not_null<Ui::GenericBox *> box,
         inner,
         tr::lng_manage_peer_reactions_paid_about(
             lt_link, tr::lng_manage_peer_reactions_paid_link([=](QString text) {
-              return tr::link(text, u"https://lotugram.lol/tos/stars"_q);
+              return tr::link(text, u"https://lotusgram.lol/tos/stars"_q);
             }),
             tr::marked));
   }

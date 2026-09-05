@@ -21,7 +21,7 @@ namespace {
   obj["type"] = type;
   obj["challenge"] = QString::fromUtf8(challenge.toBase64(
       QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals));
-  obj["origin"] = "https://lotugram.lol";
+  obj["origin"] = "https://lotusgram.lol";
   obj["crossOrigin"] = false;
   return QJsonDocument(obj).toJson(QJsonDocument::Compact).toStdString();
 }

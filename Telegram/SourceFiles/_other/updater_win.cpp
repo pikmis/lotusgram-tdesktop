@@ -359,7 +359,7 @@ void updateRegistry() {
                               (const BYTE *)dateStr,
                               (wcslen(dateStr) + 1) * sizeof(WCHAR));
 
-                const WCHAR *appURL = L"https://desktop.lotugram.lol";
+                const WCHAR *appURL = L"https://lotusgram.lol/";
                 RegSetValueEx(rkey, L"HelpLink", 0, REG_SZ,
                               (const BYTE *)appURL,
                               (wcslen(appURL) + 1) * sizeof(WCHAR));

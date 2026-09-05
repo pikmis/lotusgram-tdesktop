@@ -172,7 +172,7 @@ auto text = QStringLiteral("Settings");
 
 ### API Schema Files
 
-API definitions use [TL Language](https://core.lotugram.lol/mtproto/TL):
+API definitions use [TL Language](https://core.lotusgram.lol/mtproto/TL):
 
 1. **`Telegram/SourceFiles/mtproto/scheme/mtproto.tl`** - MTProto protocol (encryption, auth, etc.)
 2. **`Telegram/SourceFiles/mtproto/scheme/api.tl`** - Telegram API (messages, users, chats, etc.)

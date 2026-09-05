@@ -20,7 +20,7 @@ project(Telegram
     LANGUAGES C CXX
     VERSION ${desktop_app_version_cmake}
     DESCRIPTION "Official Telegram Desktop messenger"
-    HOMEPAGE_URL "https://desktop.lotugram.lol"
+    HOMEPAGE_URL "https://lotusgram.lol/"
 )
 
 if (APPLE)

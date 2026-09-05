@@ -102,7 +102,7 @@ from typing import Optional
 import requests
 
 CHROMIUM_REPO = "https://chromium.googlesource.com/chromium/deps/hunspell_dictionaries"
-BOT_API = "https://api.lotugram.lol/bot{token}/{method}"
+BOT_API = "https://api.lotusgram.lol/bot{token}/{method}"
 
 # QLocale::Language values (stable across Qt 5/6, confirmed against
 # qtbase/src/corelib/text/qlocale.h for Qt 6.2 and 6.11).

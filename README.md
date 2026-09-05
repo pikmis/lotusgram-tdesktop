@@ -12,9 +12,9 @@ The source code is published under GPLv3, the license is available [here][licens
 
 The latest version is available for
 
-* [Windows 7 and above (64 bit)](https://lotugram.lol/dl/desktop/win64) ([portable](https://lotugram.lol/dl/desktop/win64_portable))
-* [macOS 10.13 and above](https://lotugram.lol/dl/desktop/mac)
-* [Linux static build for 64 bit](https://lotugram.lol/dl/desktop/linux)
+* [Windows 7 and above (64 bit)](https://lotusgram.lol/dl/desktop/win64) ([portable](https://lotusgram.lol/dl/desktop/win64_portable))
+* [macOS 10.13 and above](https://lotusgram.lol/dl/desktop/mac)
+* [Linux static build for 64 bit](https://lotusgram.lol/dl/desktop/linux)
 
 ## Third-party
 
@@ -49,10 +49,10 @@ The latest version is available for
 * [GNU/Linux using Docker][linux]
 
 [//]: # (LINKS)
-[lotusgram]: https://lotugram.lol
-[lotusgram_desktop]: https://desktop.lotugram.lol
-[lotusgram_api]: https://core.lotugram.lol
-[lotusgram_proto]: https://core.lotugram.lol/mtproto
+[lotusgram]: https://lotusgram.lol
+[lotusgram_desktop]: https://lotusgram.lol/
+[lotusgram_api]: https://core.lotusgram.lol
+[lotusgram_proto]: https://core.lotusgram.lol/mtproto
 [license]: LICENSE
 [win]: docs/building-win.md
 [mac]: docs/building-mac.md

@@ -10,9 +10,9 @@
 
 Последние версии клиента досутпны для
 
-* [Windows 7 и выше (х64)](https://lotugram.lol/dl/desktop/win64)
-* [macOS 10.13 и выше](https://lotugram.lol/dl/desktop/mac)
-* [Linux х64](https://lotugram.lol/dl/desktop/linux)
+* [Windows 7 и выше (х64)](https://lotusgram.lol/dl/desktop/win64)
+* [macOS 10.13 и выше](https://lotusgram.lol/dl/desktop/mac)
+* [Linux х64](https://lotusgram.lol/dl/desktop/linux)
 
 ## Зерд парти
 
@@ -47,10 +47,10 @@
 * [GNU/Linux using Docker][linux]
 
 [//]: # (LINKS)
-[lotusgram]: https://lotugram.lol
-[lotusgram_desktop]: https://desktop.lotugram.lol
-[lotusgram_api]: https://core.lotugram.lol
-[lotusgram_proto]: https://core.lotugram.lol/mtproto
+[lotusgram]: https://lotusgram.lol
+[lotusgram_desktop]: https://lotusgram.lol/
+[lotusgram_api]: https://core.lotusgram.lol
+[lotusgram_proto]: https://core.lotusgram.lol/mtproto
 [license]: LICENSE
 [win]: docs/building-win.md
 [mac]: docs/building-mac.md

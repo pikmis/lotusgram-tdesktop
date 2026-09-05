@@ -178,7 +178,7 @@ Stats AbstractWriter::produceTestExample(const QString &path,
   webSession.botUsername = "botfather";
   webSession.browser = "Google Chrome";
   webSession.created = date();
-  webSession.domain = "lotugram.lol";
+  webSession.domain = "lotusgram.lol";
   webSession.ip = "127.0.0.1";
   webSession.lastActive = date();
   webSession.platform = "Windows";
@@ -422,7 +422,7 @@ Stats AbstractWriter::produceTestExample(const QString &path,
   sliceChat2.list.push_back([&] {
     auto message = serviceMessage();
     auto action = Data::ActionBotAllowed();
-    action.domain = "lotugram.lol";
+    action.domain = "lotusgram.lol";
     message.action.content = action;
     return message;
   }());

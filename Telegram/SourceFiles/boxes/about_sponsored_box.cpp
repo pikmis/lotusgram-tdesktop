@@ -19,7 +19,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 namespace Ui {
 namespace {
 
-constexpr auto kUrl = "https://ads.lotugram.lol"_cs;
+constexpr auto kUrl = "https://ads.lotusgram.lol"_cs;
 
 } // namespace
 

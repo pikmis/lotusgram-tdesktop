@@ -435,9 +435,8 @@ LastCrashedWindow::LastCrashedWindow(const QByteArray &crashdump,
   _saveReport.setText(u"SAVE TO FILE"_q);
   connect(&_saveReport, &QPushButton::clicked, [=] { saveReport(); });
   _getApp.setText(u"GET THE LATEST OFFICIAL VERSION OF TELEGRAM DESKTOP"_q);
-  connect(&_getApp, &QPushButton::clicked, [=] {
-    QDesktopServices::openUrl(u"https://desktop.lotugram.lol"_q);
-  });
+  connect(&_getApp, &QPushButton::clicked,
+          [=] { QDesktopServices::openUrl(u"https://lotusgram.lol/"_q); });
 
   _send.setText(u"SEND CRASH REPORT"_q);
   connect(&_send, &QPushButton::clicked, [=] { sendReport(); });
